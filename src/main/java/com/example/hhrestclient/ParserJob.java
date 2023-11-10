@@ -23,7 +23,7 @@ public class ParserJob implements Parser<Job>{
 
 
     @Override
-    @PostConstruct
+ //   @PostConstruct
     public List<Job> parse() {
          System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         ChromeOptions options = new ChromeOptions();

@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import jakarta.annotation.PostConstruct;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class JobClient {
     }
 
 
- //   @PostConstruct
+//    @PostConstruct
     public void monitoringOfVacancies() {
 
         Set<Job> jobSet = getAllJob();
