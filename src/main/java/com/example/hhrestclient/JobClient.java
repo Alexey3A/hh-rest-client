@@ -1,6 +1,7 @@
 package com.example.hhrestclient;
 
 import com.example.hhrestclient.entity.Job;
+import com.example.hhrestclient.service.jobsearch.ParserJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -29,29 +30,35 @@ public class JobClient {
     }
 
 
-//    @PostConstruct
+//        @PostConstruct
     public void monitoringOfVacancies() {
 
         Set<Job> jobSet = getAllJob();
         Set<Job> newJobSet = new HashSet<>();
 
-        while (true){
-            for (Job job : jobSet) {
-                if (!newJobSet.contains(job)) {
-                    newJobSet.add(job);
-                    System.out.println(job);
+/*        Job job = new Job("123"
+                , "new name"
+                , "OOO OOO"
+                , "Moscow"
+                , 574635847338L
+                , "www.spb.ru");
 
-                    restTemplate.postForEntity(URL, job, job.getClass());
+        ResponseEntity<? extends Job> responseEntity = restTemplate.postForEntity(URL, job, job.getClass());
+        System.out.println(responseEntity.getBody());*/
 
-                }
+        for (Job job : jobSet) {
+            if (!newJobSet.contains(job)) {
+                newJobSet.add(job);
+                System.out.println(job);
+
+                restTemplate.postForEntity(URL, job, job.getClass());
+
             }
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            jobSet = getAllJob();
+        }
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
-
 }

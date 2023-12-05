@@ -1,5 +1,6 @@
-package com.example.hhrestclient.service;
+package com.example.hhrestclient.service.telegrambot;
 
+import com.example.hhrestclient.JobClient;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,22 +1,18 @@
-package com.example.hhrestclient;
+package com.example.hhrestclient.service.jobsearch;
 
 import com.example.hhrestclient.entity.Job;
-import com.example.hhrestclient.service.JobRepositoryService;
-import jakarta.annotation.PostConstruct;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
-public class ParserJob implements Parser<Job>{
+public class ParserJob implements Parser<Job> {
 
     @Value("${hh.url}")
     private String URL;
@@ -24,7 +20,7 @@ public class ParserJob implements Parser<Job>{
 
     @Override
  //   @PostConstruct
-    public List<Job> parse() {
+    public Set<Job> parse() {
          System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -54,7 +50,7 @@ public class ParserJob implements Parser<Job>{
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        List<Job> jobList = new ArrayList<>();
+        Set<Job> jobList = new HashSet<>();
         List<WebElement> elements = new ArrayList<>();
 
         elements = driver.findElements(By.className("vacancy-serp-item-body__main-info"));

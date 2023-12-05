@@ -1,6 +1,6 @@
 package com.example.hhrestclient;
 
-import com.example.hhrestclient.service.Notification;
+import com.example.hhrestclient.service.telegrambot.Notification;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
