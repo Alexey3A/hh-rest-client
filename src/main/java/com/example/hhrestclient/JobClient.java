@@ -1,6 +1,8 @@
 package com.example.hhrestclient;
 
 import com.example.hhrestclient.entity.Job;
+import com.example.hhrestclient.entity.Vacancies;
+import com.example.hhrestclient.service.Communication;
 import com.example.hhrestclient.service.jobsearch.ParserJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -10,13 +12,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import jakarta.annotation.PostConstruct;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
 public class JobClient {
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    Communication communication;
 
     static final String URL = "http://localhost:8080/api/vacancies";
 
@@ -30,7 +36,7 @@ public class JobClient {
     }
 
 
-//        @PostConstruct
+    //        @PostConstruct
     public void monitoringOfVacancies() {
 
         Set<Job> jobSet = getAllJob();
@@ -60,5 +66,19 @@ public class JobClient {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Job> saveVacancies() {
+        List<Job> jobList = new ArrayList<>();
+        communication.getAllVacancies().getItems().forEach(hhVacancy -> {
+            Job job = new Job();
+            job.setName(hhVacancy.getName());
+            job.setCompany(hhVacancy.getDepartment().getName());
+            job.setHref(hhVacancy.getAlternate_url());
+            job.setCity(hhVacancy.getArea().getName());
+            restTemplate.postForEntity(URL, job, job.getClass());
+            jobList.add(job);
+        });
+        return jobList;
     }
 }

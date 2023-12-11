@@ -13,4 +13,13 @@ public class Area {
     String id;
     String name;
     String url;
+
+    @Override
+    public String toString() {
+        return "Area{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }
