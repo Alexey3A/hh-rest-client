@@ -14,7 +14,7 @@ public class HHVacancy {
     String name;
     String alternate_url;
     String created_at;
-    Company department;
+    Company employer;
     Area area;
 
     @Override
@@ -24,7 +24,7 @@ public class HHVacancy {
                 ", name='" + name + '\'' +
                 ", alternate_url='" + alternate_url + '\'' +
                 ", created_at='" + created_at + '\'' +
-                ", department=" + department +
+                ", department=" + employer +
                 ", area=" + area +
                 '}';
     }

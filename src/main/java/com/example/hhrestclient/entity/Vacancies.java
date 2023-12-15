@@ -20,7 +20,7 @@ public class Vacancies {
         items.forEach(hhVacancy -> {
             Job job = new Job();
             job.setName(hhVacancy.getName());
-            job.setCompany(hhVacancy.getDepartment().getName());
+            job.setCompany(hhVacancy.getEmployer().getName());
             job.setHref(hhVacancy.getAlternate_url());
             job.setCity(hhVacancy.getArea().getName());
             jobList.add(job);

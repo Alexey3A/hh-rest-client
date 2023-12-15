@@ -1,16 +1,13 @@
 package com.example.hhrestclient;
 
 import com.example.hhrestclient.entity.Job;
-import com.example.hhrestclient.entity.Vacancies;
 import com.example.hhrestclient.service.Communication;
-import com.example.hhrestclient.service.jobsearch.ParserJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import jakarta.annotation.PostConstruct;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,7 +21,8 @@ public class JobClient {
     @Autowired
     Communication communication;
 
-    static final String URL = "http://localhost:8080/api/vacancies";
+    static final String URL = "http://host.docker.internal:8080/api/vacancies";
+            //"http://localhost:8080/api/vacancies";
 
     public Set<Job> getAllJob() {
         ResponseEntity<Set<Job>> responseEntity = restTemplate.exchange(URL
@@ -73,7 +71,7 @@ public class JobClient {
         communication.getAllVacancies().getItems().forEach(hhVacancy -> {
             Job job = new Job();
             job.setName(hhVacancy.getName());
-            job.setCompany(hhVacancy.getDepartment().getName());
+            job.setCompany(hhVacancy.getEmployer().getName());
             job.setHref(hhVacancy.getAlternate_url());
             job.setCity(hhVacancy.getArea().getName());
             restTemplate.postForEntity(URL, job, job.getClass());

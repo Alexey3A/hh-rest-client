@@ -2,6 +2,8 @@ package com.example.hhrestclient.service.telegrambot;
 
 import com.example.hhrestclient.JobClient;
 import com.example.hhrestclient.entity.Job;
+import com.example.hhrestclient.entity.Vacancies;
+import com.example.hhrestclient.service.Communication;
 import com.example.hhrestclient.service.jobsearch.ParseWithJsoup;
 import com.example.hhrestclient.service.jobsearch.ParserJob;
 import lombok.Getter;
@@ -16,14 +18,19 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 public class Notification extends TelegramLongPollingBot {
     @Autowired
     private RestTemplate restTemplate;
-    static final String URL = "http://localhost:8080/api/vacancies";
+    @Autowired
+    Communication communication;
+    static final String URL = "http://host.docker.internal:8080/api/vacancies";
+            //"http://localhost:8080/api/vacancies";
     @Autowired
     JobClient jobClient;
 /*    @Autowired
@@ -61,7 +68,9 @@ public class Notification extends TelegramLongPollingBot {
                     while (condition) {
                         Set<Job> jobSet = jobClient.getAllJob();
 //                        Set<Job> newJobSet = parserJob.parse();
-                        Set<Job> newJobSet = parseWithJsoup.parse();
+                        Vacancies vacancies = communication.getAllVacancies();
+                        Set<Job> newJobSet = new HashSet<>(Vacancies.vacanciesToJob(vacancies.getItems()));
+//                        Set<Job> newJobSet = parseWithJsoup.parse();
                         for (Job job : newJobSet) {
                             if (!jobSet.contains(job)) {
                                 System.out.println(job);

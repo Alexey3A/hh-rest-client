@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  hh_rest_client:
+    image: 'hh_rest_client:latest'
+    build:
+      context: .
+    container_name: hh_rest_client
+    ports:
+      - "8081:8081"
